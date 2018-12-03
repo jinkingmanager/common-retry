@@ -7,6 +7,7 @@ import com.vip.finance.retry.manager.RetryInfoMananger;
 import com.vip.finance.retry.manager.RetryFacade;
 import com.vip.finance.retry.model.PauseRetryModel;
 import com.vip.finance.retry.model.QueryRetryModel;
+import com.vip.finance.retry.model.RetryInfoModel;
 import com.vip.finance.retry.model.RetryResult;
 import com.vip.finance.retry.repository.RetryInfoRepository;
 import com.vip.finance.retry.repository.RetryRecordRepository;
@@ -108,6 +109,11 @@ public class RetryFacadeImpl implements RetryFacade {
         result.setRetryRecordList(retryRecordList);
         result.setEffectRows(retryRecordList.size());
         return result;
+    }
+
+    @Override
+    public RetryResult saveRetryInfo(RetryInfoModel retryInfoModel) {
+        return retryInfoMananger.saveRetryInfo(retryInfoModel);
     }
 
 

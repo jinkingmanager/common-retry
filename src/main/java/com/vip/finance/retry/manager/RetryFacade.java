@@ -2,6 +2,7 @@ package com.vip.finance.retry.manager;
 
 import com.vip.finance.retry.model.PauseRetryModel;
 import com.vip.finance.retry.model.QueryRetryModel;
+import com.vip.finance.retry.model.RetryInfoModel;
 import com.vip.finance.retry.model.RetryResult;
 
 /**
@@ -43,4 +44,11 @@ public interface RetryFacade {
      * @return
      */
     RetryResult queryRetryRecordByParams(QueryRetryModel queryRetryInfoModel);
+
+    /**
+     * 保存重试数据
+     * @param retryInfoModel
+     * @return
+     */
+    RetryResult saveRetryInfo(RetryInfoModel retryInfoModel);
 }
