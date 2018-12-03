@@ -4,7 +4,7 @@ import com.vip.finance.retry.entity.RetryInfo;
 import com.vip.finance.retry.entity.RetryRecord;
 import com.vip.finance.retry.handler.RetryHandler;
 import com.vip.finance.retry.manager.RetryInfoMananger;
-import com.vip.finance.retry.manager.RetryManagerFacade;
+import com.vip.finance.retry.manager.RetryFacade;
 import com.vip.finance.retry.model.PauseRetryModel;
 import com.vip.finance.retry.model.QueryRetryModel;
 import com.vip.finance.retry.model.RetryResult;
@@ -22,8 +22,8 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-@Component("retryDispatchManager")
-public class RetryManagerFacadeImpl implements RetryManagerFacade {
+@Component("retryFacade")
+public class RetryFacadeImpl implements RetryFacade {
 
     @Autowired
     private RetryInfoMananger retryInfoMananger;

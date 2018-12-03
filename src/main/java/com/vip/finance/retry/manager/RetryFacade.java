@@ -7,7 +7,7 @@ import com.vip.finance.retry.model.RetryResult;
 /**
  * 用于retry时做各种重试实现的分发
  */
-public interface RetryManagerFacade {
+public interface RetryFacade {
 
     /**
      * 重试分发，会扫描数据，按照优先级及时间处理
