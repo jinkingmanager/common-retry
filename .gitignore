@@ -1,0 +1,67 @@
+.settings
+
+.metadata
+en=java
+*.stackdump
+.gradle
+
+bin
+bin-groovy
+build
+*.tmp
+.project
+.classpath
+*~
+*.java.hsp
+*.sonarj
+*.sw*
+.DS_Store
+.settings
+.springBeans
+bin
+build.sh
+integration-repo
+ivy-cache
+jxl.log
+jmx.log
+derby.log
+.gradle
+gradle-app.setting
+argfile*
+pom.xml
+testdata.json
+activemq-data/
+build/
+/build
+*/build
+*/**/build
+target/
+/target
+*/target
+*/**/target
+
+# Eclipse artifacts, including WTP generated manifests
+.classpath
+.project
+.metadata
+venus-*/src/main/java/META-INF/MANIFEST.MF
+.eclipse-pmd
+# IDEA artifacts and output dirs
+*.iml
+*.ipr
+*.iws
+.idea
+out
+test-output
+atlassian-ide-plugin.xml
+.gradletasknamecach
+node_modules/
+# Gruntfile.js
+# package.json
+# config.json
+/.recommenders
+/Servers
+Servers
+.vinfo
+classes/
+*.log

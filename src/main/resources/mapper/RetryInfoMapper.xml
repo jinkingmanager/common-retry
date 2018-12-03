@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vip.finance.retry.repository.RetryInfoRepository">
+    <resultMap id="BaseResultMap" type="com.vip.finance.retry.entity.RetryInfo">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="biz_id" property="bizId" jdbcType="VARCHAR"/>
+        <result column="bean_class_name" property="beanClassName" jdbcType="VARCHAR"/>
+        <result column="bean_name" property="beanName" jdbcType="VARCHAR"/>
+        <result column="method_name" property="methodName" jdbcType="VARCHAR"/>
+        <result column="retry_count" property="retryCount" jdbcType="INTEGER"/>
+        <result column="max_retry_count" property="maxRetryCount" jdbcType="INTEGER"/>
+        <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="priority" property="priority" jdbcType="INTEGER"/>
+        <result column="req_params" property="reqParams" jdbcType="VARCHAR"/>
+        <result column="req_params_class_name" property="reqParamsClassName" jdbcType="VARCHAR"/>
+        <result column="falloff_type" property="falloffType" jdbcType="VARCHAR"/>
+        <result column="falloff_interval" property="falloffInterval" jdbcType="INTEGER"/>
+        <result column="retry_time" property="retryTime" jdbcType="TIMESTAMP"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        `id`,
+        `biz_id`,
+        `bean_class_name`,
+        `bean_name`,
+        `method_name`,
+        `retry_count`,
+        `max_retry_count`,
+        `status`,
+        `priority`,
+        `req_params`,
+        `req_params_class_name`,
+        `falloff_type`,
+        `falloff_interval`,
+        `retry_time`,
+        `create_time`,
+        `update_time`
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from retry_info
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByIds" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from retry_info
+        where id = #{id,jdbcType=INTEGER}
+        and biz_id = #{bizId,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insert" parameterType="com.vip.finance.retry.entity.RetryInfo">
+        insert into retry_info (
+        `id`,
+        `biz_id`,
+        `bean_class_name`,
+        `bean_name`,
+        `method_name`,
+        `retry_count`,
+        `max_retry_count`,
+        `status`,
+        `priority`,
+        `req_params`,
+        `req_params_class_name`,
+        `need_falloff`,
+        `retry_time`,
+        `create_time`,
+        `update_time`
+        )
+        values (
+        #{id,jdbcType=INTEGER},
+        #{bizId,jdbcType=INTEGER},
+        #{beanClassName,jdbcType=VARCHAR},
+        #{beanName,jdbcType=VARCHAR},
+        #{methodName,jdbcType=VARCHAR},
+        #{retryCount,jdbcType=INTEGER},
+        #{maxRetryCount,jdbcType=INTEGER},
+        #{status,jdbcType=VARCHAR},
+        #{priority,jdbcType=INTEGER},
+        #{reqParams,jdbcType=VARCHAR},
+        #{reqParamsClassName,jdbcType=VARCHAR},
+        #{needFalloff,jdbcType=VARCHAR},
+        #{retryTime,jdbcType=TIMESTAMP},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{updateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+
+    <update id="addRetryCount">
+        update retry_info
+        <set>
+            retry_count = retry_count + 1,
+            <if test="newRetryTime != null">
+                `retry_time`= #{newRetryTime,jdbcType=TIMESTAMP},
+            </if>
+            update_time = now()
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+
+    <update id="retrySucc" parameterType="java.lang.Integer">
+        update retry_info
+        set
+        `status` = 'succ',
+        retry_count = retry_count + 1,
+        `update_time` = now()
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="pause">
+        update retry_info
+        set
+        status = 'pause'
+        update_time = now()
+        where id = #{id,jdbcType=INTEGER}
+        and biz_id = #{bizId,jdbcType=VARCHAR}
+        and status = 'retrying'
+    </update>
+
+    <update id="resume">
+        update retry_info
+        set
+        status = 'retrying'
+        update_time = now()
+        where id = #{id,jdbcType=INTEGER}
+        and biz_id = #{bizId,jdbcType=VARCHAR}
+        and status = 'pause'
+    </update>
+
+
+    <select id="selectRetryingData" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from retry_info where
+        `status` = 'retrying'
+        and `retry_time`  <![CDATA[<]]> now()
+        and `retry_count` <![CDATA[<]]> `max_retry_count`
+        order by `priority` desc, `retry_time` asc
+        limit 200
+    </select>
+
+    <select id="selectByParams" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from retry_info
+        <where>
+            <if test="id != null">
+                `id` = #{id,jdbcType=INTEGER}
+            </if>
+            <if test="biz_id != null">
+                and `biz_id` = #{bizId,jdbcType=VARCHAR}
+            </if>
+            <if test="status != null">
+                and `status` = #{status,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+</mapper>
+  
+
+  
+	
