@@ -28,7 +28,6 @@ derby.log
 .gradle
 gradle-app.setting
 argfile*
-pom.xml
 testdata.json
 activemq-data/
 build/
