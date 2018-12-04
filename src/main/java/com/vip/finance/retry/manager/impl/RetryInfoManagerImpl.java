@@ -86,7 +86,7 @@ public class RetryInfoManagerImpl implements RetryInfoMananger {
 
         retryRecord.setBizId(retryInfo.getBizId());
         retryRecord.setCreateTime(Date.from(Instant.now()));
-        retryRecord.setReason(failReason);
+        retryRecord.setReason(StringUtils.substring(failReason,0,255));
         retryRecord.setRetryInfoId(id);
         retryRecord.setOperateType(OperateTypeEnum.RETRY.getType());
 
