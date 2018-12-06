@@ -41,7 +41,7 @@ public class RetryFacadeImpl implements RetryFacade {
             20,
             TimeUnit.SECONDS,
             new LinkedBlockingQueue<>(400),
-            new CustomizableThreadFactory("fundRetryThread-")
+            new CustomizableThreadFactory("-RetryThread-")
     );
     private RetryResult result;
 

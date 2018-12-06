@@ -26,39 +26,40 @@ public class RetryHandler implements Runnable {
         retry(fundRetryInfo,fundRetryInfoMananger);
     }
 
-    private void retry(RetryInfo fundRetryInfo, RetryInfoMananger fundRetryInfoMananger){
+    private void retry(RetryInfo retryInfo, RetryInfoMananger fundRetryInfoMananger){
         try {
             // 构造对应的需要重试的数据
-            log.debug("retry info:", fundRetryInfo.toString());
+            log.info("Thread" + Thread.currentThread().getName() + "|| deal retry info:", retryInfo.toString());
             // 获取bean class
-            Class beanClazz = getClass().getClassLoader().loadClass(fundRetryInfo.getBeanClassName());
+            Class beanClazz = getClass().getClassLoader().loadClass(retryInfo.getBeanClassName());
 
             // 获取params class
-            Class paramClazz = getClass().getClassLoader().loadClass(fundRetryInfo.getReqParamsClassName());
+            Class paramClazz = getClass().getClassLoader().loadClass(retryInfo.getReqParamsClassName());
 
             // 获取对应的方法
-            Method retryMethod = beanClazz.getMethod(fundRetryInfo.getMethodName(),paramClazz);
+            Method retryMethod = beanClazz.getDeclaredMethod(retryInfo.getMethodName(),paramClazz);
 
             if (null != retryMethod) {
                 try {
                     // 执行重试方法
-                    retryMethod.invoke(SpringContextUtil.getBean(fundRetryInfo.getBeanName()),
-                            JSON.parseObject(fundRetryInfo.getReqParams(), paramClazz));
+                    retryMethod.invoke(SpringContextUtil.getBean(retryInfo.getBeanName()),
+                            JSON.parseObject(retryInfo.getReqParams(), paramClazz));
 
                     // 如果不抛出异常，则表示重试成功，处理数据
-                    fundRetryInfoMananger.retrySucc(fundRetryInfo.getId());
+                    fundRetryInfoMananger.retrySucc(retryInfo.getId());
                 } catch (InvocationTargetException e) {
                     // 继续抛出异常，则addRetryCount
-                    log.error("retry exception,e=", e);
-                    fundRetryInfoMananger.addRetryCount(fundRetryInfo.getId(), ((InvocationTargetException) e).getTargetException().toString());
+                    log.error("Thread" + Thread.currentThread().getName() + "|| retry exception,e=", e);
+                    fundRetryInfoMananger.addRetryCount(retryInfo.getId(), ((InvocationTargetException) e).getTargetException().toString());
                 } catch (Exception e) {
                     // 其他异常，打印日志，不做其他操作
-                    log.error("inner ---- handler retry error,e=", e);
+                    log.error("Thread" + Thread.currentThread().getName() + "|| inner ---- handler retry error,e=", e);
                 }
             }
+            log.error("Thread" + Thread.currentThread().getName() + "|| Can not find method " + retryInfo.getMethodName() +" , please check params and scope" );
         } catch (Exception e) {
             // 其他异常，打印日志，不做其他操作
-            log.error("out ---- handler retry error ,e=", e);
+            log.error("Thread" + Thread.currentThread().getName() + "|| out ---- handler retry error ,e=", e);
         }
 
     }
