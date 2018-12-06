@@ -67,7 +67,8 @@
         `priority`,
         `req_params`,
         `req_params_class_name`,
-        `need_falloff`,
+        `falloff_type`,
+        `falloff_interval`,
         `retry_time`,
         `create_time`,
         `update_time`
@@ -84,7 +85,8 @@
         #{priority,jdbcType=INTEGER},
         #{reqParams,jdbcType=VARCHAR},
         #{reqParamsClassName,jdbcType=VARCHAR},
-        #{needFalloff,jdbcType=VARCHAR},
+        #{falloffType, jdbcType=VARCHAR},
+        #{falloffInterval,jdbcType=INTEGER},
         #{retryTime,jdbcType=TIMESTAMP},
         #{createTime,jdbcType=TIMESTAMP},
         #{updateTime,jdbcType=TIMESTAMP}
