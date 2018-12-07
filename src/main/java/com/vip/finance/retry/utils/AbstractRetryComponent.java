@@ -30,6 +30,11 @@ public abstract class AbstractRetryComponent<T, R> {
     @Autowired
     private RetryFacade retryFacade;
 
+    /**
+     * 模板类，用于实现retry及最终失败后的重试数据入库
+     * @param t 请求
+     * @return 处理结果
+     */
     public R retryTemplate(T t) {
 
         log.info(" request:{}",
