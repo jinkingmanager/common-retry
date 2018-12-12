@@ -5,6 +5,7 @@ import com.vip.finance.retry.entity.RetryInfo;
 import com.vip.finance.retry.manager.RetryInfoMananger;
 import com.vip.finance.retry.utils.SpringContextUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -22,6 +23,7 @@ public class RetryHandler implements Runnable {
     }
 
     @Override
+    @Transactional
     public void run() {
         retry(fundRetryInfo,fundRetryInfoMananger);
     }

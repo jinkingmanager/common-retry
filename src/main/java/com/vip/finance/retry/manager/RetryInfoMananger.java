@@ -6,8 +6,6 @@ import com.vip.finance.retry.model.RetryResult;
 
 public interface RetryInfoMananger {
 
-    int DEFAULT_MAX_RETRY_COUNT = 99;
-
     /**
      * 保存重试数据
      *

@@ -61,17 +61,20 @@ public class RetryInfo {
         this.retryCount = 0;
         this.retryTime = Date.from(instant.plus(retryInfoModel.getRetryTime(), ChronoUnit.SECONDS));
         this.reqParams = retryInfoModel.getReqParams();
-        this.maxRetryCount = retryInfoModel.getMaxRetryCount();
-
+        if (retryInfoModel.getMaxRetryCount() != 0) {
+            this.maxRetryCount = retryInfoModel.getMaxRetryCount();
+        } else {
+            this.maxRetryCount = 99;
+        }
         if (StringUtils.isBlank(retryInfoModel.getFalloffType())) {
             this.falloffType = FalloffTypeEnum.NO.getType();
         } else {
             this.falloffType = retryInfoModel.getFalloffType();
         }
 
-        if( 0 == retryInfoModel.getFalloffInterval()){
+        if (0 == retryInfoModel.getFalloffInterval()) {
             this.falloffInterval = 60;
-        }else {
+        } else {
             this.falloffInterval = retryInfoModel.getFalloffInterval();
         }
     }

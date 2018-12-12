@@ -75,7 +75,7 @@ public class RetryInfoManagerImpl implements RetryInfoMananger {
             return retryResult;
         }
 
-        if (retryInfo.getRetryCount() >= retryInfo.getMaxRetryCount()) {
+        if (retryInfo.getRetryCount() > retryInfo.getMaxRetryCount()) {
             retryResult.setSucc(false);
             retryResult.setMessage("已超出最大重试次数");
             return retryResult;
@@ -119,6 +119,7 @@ public class RetryInfoManagerImpl implements RetryInfoMananger {
     }
 
     @Override
+    @Transactional
     public RetryResult retrySucc(int id) {
         RetryResult retryResult = new RetryResult();
 
