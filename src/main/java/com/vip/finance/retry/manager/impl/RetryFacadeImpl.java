@@ -43,7 +43,6 @@ public class RetryFacadeImpl implements RetryFacade {
             new LinkedBlockingQueue<>(400),
             new CustomizableThreadFactory("-RetryThread-")
     );
-    private RetryResult result;
 
     @Override
     public String retryDispatch() {
