@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.vip.finance.retry.repository.RetryInfoRepository">
-    <resultMap id="BaseResultMap" type="com.vip.finance.retry.entity.RetryInfo">
+<mapper namespace="com.retry.common.repository.RetryInfoRepository">
+    <resultMap id="BaseResultMap" type="com.retry.common.entity.RetryInfo">
         <id column="id" property="id" jdbcType="INTEGER"/>
         <result column="biz_id" property="bizId" jdbcType="VARCHAR"/>
         <result column="bean_class_name" property="beanClassName" jdbcType="VARCHAR"/>
@@ -54,9 +54,8 @@
         and biz_id = #{bizId,jdbcType=VARCHAR}
     </select>
 
-    <insert id="insert" parameterType="com.vip.finance.retry.entity.RetryInfo">
+    <insert id="insert" parameterType="com.retry.common.entity.RetryInfo">
         insert into retry_info (
-        `id`,
         `biz_id`,
         `bean_class_name`,
         `bean_name`,
@@ -74,7 +73,6 @@
         `update_time`
         )
         values (
-        #{id,jdbcType=INTEGER},
         #{bizId,jdbcType=INTEGER},
         #{beanClassName,jdbcType=VARCHAR},
         #{beanName,jdbcType=VARCHAR},
