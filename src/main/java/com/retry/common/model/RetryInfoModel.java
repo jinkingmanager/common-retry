@@ -4,6 +4,7 @@ import com.google.common.base.Preconditions;
 import lombok.*;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @AllArgsConstructor
 public class RetryInfoModel extends RetryBaseModel{
@@ -15,8 +16,8 @@ public class RetryInfoModel extends RetryBaseModel{
     private Integer priority; // 当前重试的优先级 不传的话默认是3 --普通
     private String reqParams; // 请求参数，json格式
     private Class reqParamsClassName; // 请求参数对应的class
-    private String falloffType; // 超时时间类型，详见FalloffTypeEnum
-    private Integer falloffInterval; // 延时时间，默认为60秒，单位为秒
+    private String decayType; // 超时时间类型，详见FalloffTypeEnum
+    private Integer decayInterval; // 延时时间，默认为60秒，单位为秒
     private Integer maxRetryCount; // 最大重试次数，不传默认为99
     private int retryTime; // 多长时间后重试，单位为秒,不传的话默认为30，即30秒之后重试
 

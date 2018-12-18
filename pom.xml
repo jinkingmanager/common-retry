@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.vip.finance.common</groupId>
+    <groupId>com.retry.common</groupId>
     <artifactId>common-retry</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
@@ -17,14 +17,15 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
+    <!-- TODO 在这里配置本地maven私服地址，另外 注意settings.xml中需要配置对应权限的上传用户、密码 -->
     <distributionManagement>
         <repository>
             <id>releases</id>
-            <url>http://mvn1.tools.vipshop.com/nexus/content/repositories/releases/</url>
+            <url>http://xxx:8081/nexus/content/repositories/releases/</url>
         </repository>
         <snapshotRepository>
             <id>snapshots</id>
-            <url>http://mvn1.tools.vipshop.com/nexus/content/repositories/snapshots/</url>
+            <url>http://xxx:8081/nexus/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 

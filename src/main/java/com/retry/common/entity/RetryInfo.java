@@ -6,6 +6,7 @@ import com.retry.common.enums.DecayTypeEnum;
 import com.retry.common.enums.RetryStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
@@ -14,6 +15,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @AllArgsConstructor
 public class RetryInfo {
@@ -29,8 +31,8 @@ public class RetryInfo {
     private Integer priority;
     private String reqParams;
     private String reqParamsClassName;
-    private String falloffType;
-    private Integer falloffInterval;
+    private String decayType;
+    private Integer decayInterval;
     private Date retryTime;
     private Date createTime;
     private Date updateTime;
@@ -66,16 +68,16 @@ public class RetryInfo {
         } else {
             this.maxRetryCount = 99;
         }
-        if (StringUtils.isBlank(retryInfoModel.getFalloffType())) {
-            this.falloffType = DecayTypeEnum.NO.getType();
+        if (StringUtils.isBlank(retryInfoModel.getDecayType())) {
+            this.decayType = DecayTypeEnum.NO.getType();
         } else {
-            this.falloffType = retryInfoModel.getFalloffType();
+            this.decayType = retryInfoModel.getDecayType();
         }
 
-        if (0 == retryInfoModel.getFalloffInterval()) {
-            this.falloffInterval = 60;
+        if (0 == retryInfoModel.getDecayInterval()) {
+            this.decayInterval = 60;
         } else {
-            this.falloffInterval = retryInfoModel.getFalloffInterval();
+            this.decayInterval = retryInfoModel.getDecayInterval();
         }
     }
 }

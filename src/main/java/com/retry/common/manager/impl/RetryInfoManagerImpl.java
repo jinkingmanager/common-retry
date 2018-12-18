@@ -96,14 +96,14 @@ public class RetryInfoManagerImpl implements RetryInfoMananger {
         // 更新重试触发时间
         // 恒定时间间隔
         Date newRetryTime = null;
-        if (StringUtils.equalsIgnoreCase(DecayTypeEnum.AVERAGE.getType(), retryInfo.getFalloffType())) {
+        if (StringUtils.equalsIgnoreCase(DecayTypeEnum.AVERAGE.getType(), retryInfo.getDecayType())) {
             newRetryTime = Date.from(Instant.ofEpochMilli(retryInfo.getRetryTime().getTime())
-                    .plus(retryInfo.getFalloffInterval(), ChronoUnit.SECONDS));
+                    .plus(retryInfo.getDecayInterval(), ChronoUnit.SECONDS));
         }
         // 递增衰减
-        else if (StringUtils.equalsIgnoreCase(DecayTypeEnum.INCREASE.getType(), retryInfo.getFalloffType())) {
+        else if (StringUtils.equalsIgnoreCase(DecayTypeEnum.INCREASE.getType(), retryInfo.getDecayType())) {
             newRetryTime = Date.from(Instant.ofEpochMilli(
-                    retryInfo.getRetryTime().getTime()).plus(retryInfo.getRetryCount() * retryInfo.getFalloffInterval(),
+                    retryInfo.getRetryTime().getTime()).plus(retryInfo.getRetryCount() * retryInfo.getDecayInterval(),
                     ChronoUnit.SECONDS));
         }
         // 更新次数
