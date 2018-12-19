@@ -1,6 +1,11 @@
 ## common-retry
 基于resilience4j实现的代码级别retry，以及基于db存储+定时任务的retry补偿，可用于多种场景下的重试实现，并可自定义重试次数、衰减时间、重试调用的方法等
 
+整体思路如下：
+
+![重试](重试.jpg)
+
+
 ## common-retry 接入指南
 common-retry组件并未上传到公开mvn仓库，可下载后通过 mvn clean deploy 命令上传到本地私服
 
